@@ -7,6 +7,7 @@ import java.util.List;
 
 import app.irvanyale.com.academy.data.CourseEntity;
 import app.irvanyale.com.academy.data.ModuleEntity;
+import app.irvanyale.com.academy.data.source.AcademyRepository;
 import app.irvanyale.com.academy.utils.DataDummy;
 
 /**
@@ -14,23 +15,21 @@ import app.irvanyale.com.academy.utils.DataDummy;
  */
 public class DetailCourseViewModel extends ViewModel {
     private String courseId;
+    private AcademyRepository academyRepository;
+
+    public DetailCourseViewModel(AcademyRepository mAcademyRepository) {
+        this.academyRepository = mAcademyRepository;
+    }
 
     public void setSelectedCourse(String courseId) {
         this.courseId = courseId;
     }
 
     public CourseEntity getCourse() {
-        CourseEntity course = null;
-        List<CourseEntity> courseEntities = DataDummy.generateDummyCourses();
-        for (CourseEntity courseEntity : courseEntities) {
-            if (courseEntity.getCourseId().equals(courseId)) {
-                course = courseEntity;
-            }
-        }
-        return course;
+        return academyRepository.getCourseWithModules(courseId);
     }
 
     public List<ModuleEntity> getModules() {
-        return DataDummy.generateDummyModules(courseId);
+        return academyRepository.getAllModulesByCourse(courseId);
     }
 }

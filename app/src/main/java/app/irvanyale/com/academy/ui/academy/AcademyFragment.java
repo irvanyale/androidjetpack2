@@ -20,6 +20,7 @@ import java.util.List;
 import app.irvanyale.com.academy.R;
 import app.irvanyale.com.academy.data.CourseEntity;
 import app.irvanyale.com.academy.utils.DataDummy;
+import app.irvanyale.com.academy.viewmodel.ViewModelFactory;
 
 
 /**
@@ -46,7 +47,9 @@ public class AcademyFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            AcademyViewModel viewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(AcademyViewModel.class);
+            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
+
+            AcademyViewModel viewModel = new ViewModelProvider(this, factory).get(AcademyViewModel.class);
             List<CourseEntity> courses = viewModel.getCourses();
 
             AcademyAdapter academyAdapter = new AcademyAdapter();

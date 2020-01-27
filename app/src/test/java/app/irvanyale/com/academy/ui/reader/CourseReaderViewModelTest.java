@@ -2,6 +2,9 @@ package app.irvanyale.com.academy.ui.reader;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +12,14 @@ import java.util.List;
 import app.irvanyale.com.academy.data.ContentEntity;
 import app.irvanyale.com.academy.data.CourseEntity;
 import app.irvanyale.com.academy.data.ModuleEntity;
+import app.irvanyale.com.academy.data.source.AcademyRepository;
 import app.irvanyale.com.academy.utils.DataDummy;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CourseReaderViewModelTest {
 
     private CourseReaderViewModel viewModel;
@@ -22,9 +29,12 @@ public class CourseReaderViewModelTest {
     private List<ModuleEntity> dummyModules = DataDummy.generateDummyModules(courseId);
     private String moduleId = dummyModules.get(0).getModuleId();
 
+    @Mock
+    private AcademyRepository academyRepository;
+
     @Before
     public void setUp() {
-        viewModel = new CourseReaderViewModel();
+        viewModel = new CourseReaderViewModel(academyRepository);
         viewModel.setSelectedCourse(courseId);
         viewModel.setSelectedModule(moduleId);
 
@@ -34,14 +44,18 @@ public class CourseReaderViewModelTest {
 
     @Test
     public void getModules() {
+        when(academyRepository.getAllModulesByCourse(courseId)).thenReturn(dummyModules);
         List<ModuleEntity> moduleEntities = viewModel.getModules();
+        verify(academyRepository).getAllModulesByCourse(courseId);
         assertNotNull(moduleEntities);
         assertEquals(7, moduleEntities.size());
     }
 
     @Test
     public void getSelectedModule() {
+        when(academyRepository.getContent(courseId, moduleId)).thenReturn(dummyModules.get(0));
         ModuleEntity moduleEntity = viewModel.getSelectedModule();
+        verify(academyRepository).getContent(courseId, moduleId);
         assertNotNull(moduleEntity);
         ContentEntity contentEntity = moduleEntity.contentEntity;
         assertNotNull(contentEntity);

@@ -25,6 +25,7 @@ import app.irvanyale.com.academy.ui.reader.CourseReaderActivity;
 import app.irvanyale.com.academy.ui.reader.CourseReaderCallback;
 import app.irvanyale.com.academy.ui.reader.CourseReaderViewModel;
 import app.irvanyale.com.academy.utils.DataDummy;
+import app.irvanyale.com.academy.viewmodel.ViewModelFactory;
 
 
 /**
@@ -66,7 +67,9 @@ public class ModuleListFragment extends Fragment implements MyAdapterClickListen
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            viewModel = new ViewModelProvider(requireActivity(), new ViewModelProvider.NewInstanceFactory()).get(CourseReaderViewModel.class);
+            ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity());
+
+            viewModel = new ViewModelProvider(requireActivity(), factory).get(CourseReaderViewModel.class);
             adapter = new ModuleListAdapter(this);
             populateRecyclerView(viewModel.getModules());
         }

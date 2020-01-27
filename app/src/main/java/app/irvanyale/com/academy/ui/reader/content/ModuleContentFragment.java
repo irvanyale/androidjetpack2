@@ -17,6 +17,7 @@ import app.irvanyale.com.academy.R;
 import app.irvanyale.com.academy.data.ContentEntity;
 import app.irvanyale.com.academy.data.ModuleEntity;
 import app.irvanyale.com.academy.ui.reader.CourseReaderViewModel;
+import app.irvanyale.com.academy.viewmodel.ViewModelFactory;
 
 
 /**
@@ -52,7 +53,9 @@ public class ModuleContentFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            CourseReaderViewModel viewModel = new ViewModelProvider(requireActivity(), new ViewModelProvider.NewInstanceFactory()).get(CourseReaderViewModel.class);
+            ViewModelFactory factory = ViewModelFactory.getInstance(requireActivity());
+
+            CourseReaderViewModel viewModel = new ViewModelProvider(requireActivity(), factory).get(CourseReaderViewModel.class);
             ModuleEntity module = viewModel.getSelectedModule();
             populateWebView(module);
         }

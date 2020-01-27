@@ -27,6 +27,7 @@ import app.irvanyale.com.academy.data.CourseEntity;
 import app.irvanyale.com.academy.data.ModuleEntity;
 import app.irvanyale.com.academy.ui.reader.CourseReaderActivity;
 import app.irvanyale.com.academy.utils.DataDummy;
+import app.irvanyale.com.academy.viewmodel.ViewModelFactory;
 
 public class DetailCourseActivity extends AppCompatActivity {
 
@@ -56,7 +57,9 @@ public class DetailCourseActivity extends AppCompatActivity {
 
         DetailCourseAdapter adapter = new DetailCourseAdapter();
 
-        DetailCourseViewModel viewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(DetailCourseViewModel.class);
+        ViewModelFactory factory = ViewModelFactory.getInstance(this);
+
+        DetailCourseViewModel viewModel = new ViewModelProvider(this, factory).get(DetailCourseViewModel.class);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

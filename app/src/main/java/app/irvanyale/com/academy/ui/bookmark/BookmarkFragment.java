@@ -21,6 +21,7 @@ import java.util.List;
 import app.irvanyale.com.academy.R;
 import app.irvanyale.com.academy.data.CourseEntity;
 import app.irvanyale.com.academy.utils.DataDummy;
+import app.irvanyale.com.academy.viewmodel.ViewModelFactory;
 
 
 /**
@@ -51,7 +52,9 @@ public class BookmarkFragment extends Fragment implements BookmarkFragmentCallba
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (getActivity() != null) {
-            BookmarkViewModel viewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(BookmarkViewModel.class);
+            ViewModelFactory factory = ViewModelFactory.getInstance(getActivity());
+
+            BookmarkViewModel viewModel = new ViewModelProvider(this, factory).get(BookmarkViewModel.class);
             List<CourseEntity> courses = viewModel.getBookmarks();
 
             BookmarkAdapter adapter = new BookmarkAdapter(this);

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import app.irvanyale.com.academy.data.CourseEntity;
+import app.irvanyale.com.academy.data.source.AcademyRepository;
 import app.irvanyale.com.academy.utils.DataDummy;
 
 /**
@@ -12,7 +13,13 @@ import app.irvanyale.com.academy.utils.DataDummy;
  */
 public class AcademyViewModel extends ViewModel {
 
+    private AcademyRepository academyRepository;
+
+    public AcademyViewModel(AcademyRepository mAcademyRepository) {
+        this.academyRepository = mAcademyRepository;
+    }
+
     public List<CourseEntity> getCourses() {
-        return DataDummy.generateDummyCourses();
+        return academyRepository.getAllCourses();
     }
 }
